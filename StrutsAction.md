@@ -1,0 +1,66 @@
+
+```
+
+package org.easy.struts.anno;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import org.apache.struts.action.ActionForm;
+
+/**
+ * Describes an ActionMapping object that is to be used to process a request for
+ * a specific module-relative URI.
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.TYPE })
+public @interface StrutsAction {
+	
+	/**
+	 * The module-relative path of the submitted request, starting with a "/"
+	 * character, and without the filename extension if extension mapping is
+	 * used.
+	 */
+	String path();
+	
+	/**
+	 * Class of the form bean, if any, that is associated with this action
+	 * mapping.
+	 */
+	Class<? extends ActionForm> form() default ActionForm.class;
+	
+	/**
+	 * Name of the form bean, if any, that is associated with this action
+	 * mapping.
+	 */
+	String name() default "";
+	
+	/**
+	 * Module-relative path of the action or other resource to which control
+	 * should be returned if a validation error is encountered. Valid only when
+	 * "name" is specified. Required if "name" is specified and the input bean
+	 * returns validation errors. Optional if "name" is specified and the input
+	 * bean does not return validation errors.
+	 */
+    String input() default "";
+	
+	/**
+	 * The context ("request" or "session") that is used to access our
+	 * ActionForm bean, if any. Optional if "name" is specified, else not valid.
+	 */
+	String scope() default "request";
+	
+	/**
+	 * Set to "true" if the validate method of the ActionForm bean should be
+	 * called prior to calling the Action object for this action mapping, or set
+	 * to "false" if you do not want the validate method called.
+	 */
+	boolean validate() default true;
+	
+	boolean cancellable() default false;
+	
+}
+
+```
